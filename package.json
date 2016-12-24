@@ -1,0 +1,27 @@
+{
+  "name": "software-startup-madness",
+  "version": "1.0.0",
+  "description": "Multiplayer browser game.",
+  "engines": {
+    "node": "4.6.0"
+  },
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tataton/software-startup-madness.git"
+  },
+  "author": "Andy Taton",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/tataton/software-startup-madness/issues"
+  },
+  "homepage": "https://github.com/tataton/software-startup-madness#readme",
+  "dependencies": {
+    "express": "^4.14.0",
+    "socket.io": "^1.7.2"
+  }
+}

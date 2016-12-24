@@ -1,0 +1,8 @@
+/* Override jQM text input width in login screen for "last initial". */
+.ui-input-text-first-name {
+  width: 200px;
+}
+
+.ui-input-text-last-initial {
+  width: 40px;
+}
