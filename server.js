@@ -16,13 +16,19 @@ app.get('/', function(req, res){
 var io = socket(server);
 
 var lobbyPlayers = [];
-var lobbyMessages = [];
+var lobbyPlayerNicknames = [];
+var lobbyLast9Messages = [];
 
-function Player(socketID, firstName, lastName){
+function Player(socketID, firstName, lastInitial){
   this.socketID = socketID;
   this.firstName = firstName;
   this.lastInitial = lastInitial;
   this.nickname = (firstName + ' ' + lastInitial);
+}
+
+function currentTime(){
+  return new Date().toLocaleTimeString(
+    'en-US', {hour12: false, hour: "numeric", minute: "numeric"});
 }
 
 io.sockets.on('connection', function(socket){
@@ -32,7 +38,14 @@ io.sockets.on('connection', function(socket){
   socket.on('name', function(nameData){
     thisPlayer = new Player(socket.id, nameData.firstName, nameData.lastInitial);
     lobbyPlayers.push(thisPlayer);
-    socket.broadcast.emit('lobby-joined', thisPlayer.nickname);
+    lobbyPlayerNicknames.push(thisPlayer.nickname);
+    socket.broadcast.emit('lobby-names', lobbyPlayerNicknames);
+    for (var i = 0; i < lobbyLast9Messages.length; i++) {
+      socket.emit('message', lobbyLast9Messages[i]);
+    }
+    var joinMessage = currentTime() + ' ' + thisPlayer.nickname + ' joined the lobby.';
+    relayChatMessage('message', joinMessage);
+
     socket.on('disconnect', function(){
       socket.broadcast.emit('lobby-left', thisPlayer.nickname);
       var playerIndex = lobbyPlayers.indexOf(thisPlayer);
@@ -48,3 +61,5 @@ io.sockets.on('connection', function(socket){
     console.log('Socket ' + socket.id + ' disconnected.');
   });
 });
+
+function relayChatMessage(socket, message){}
