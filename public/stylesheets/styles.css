@@ -7,11 +7,12 @@
   width: 10%;
 }
 
-.ui-block-a-lobby {
-  width: 30%;
-  border: 2px solid;
+.chat-line {
+  margin-top: 0.25em;
+  margin-bottom: 0.25em;
 }
 
-.ui-block-b-lobby {
-  width: 70%;
+mark {
+  color: darkgray;
+  background-color: inherit;
 }

@@ -8,10 +8,8 @@
     <script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
     <script src="scripts/client.js" charset="utf-8"></script>
     <link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css" />
-    <link rel="stylesheet" href="themes/software-startup.min.css" />
-    <link rel="stylesheet" href="themes/jquery.mobile.icons.min.css" />
     <link rel="stylesheet" href="stylesheets/styles.css" />
-    <meta name="viewport" content="width=device-width" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
   </head>
   <body>
 
@@ -20,14 +18,14 @@
     <section id="entrypage" data-role="page">
       <div data-role="header">
       </div>
-      <div class="ui-content">
+      <div role="main" class="ui-content">
         <h1>Software Startup</h1>
         <form>
           <fieldset data-role="ui-field-contain">
             <label for="first-name">First Name:</label>
-            <input type="text" name="first-name" id="first-name" data-wrapper-class="ui-input-text-first-name" maxlength="14" value="">
+            <input type="text" name="first-name" id="first-name" data-wrapper-class="ui-input-text-first-name" maxlength="14" class="no-enter" value="">
             <label for="last-initial">Last Initial:</label>
-            <input type="text" name="last-initial" id="last-initial" data-wrapper-class="ui-input-text-last-initial" maxlength="1" value="">
+            <input type="text" name="last-initial" id="last-initial" data-wrapper-class="ui-input-text-last-initial" class="no-enter" maxlength="1" value="">
             <button type="button" class="ui-btn" id="sign-in">Sign In</button>
           </fieldset>
           <p id="sign-in-warning"></p>
@@ -42,12 +40,25 @@
     <section id="lobbypage" data-role="page">
       <div data-role="header">
       </div>
-      <div class="ui-content">
-        <div class="ui-block-a ui-block-a-lobby">
-          <h2>Game Lobby:</h2>
-          <ul data-role="listview" id="lobby-list"></ul>
+      <div role="main" class="ui-content">
+        <div class="ui-grid-solo" style="height: 30vh;">
         </div>
-        <div class="ui-block-b ui-block-b-lobby">
+        <div class="ui-grid-a" style="height: 40vh;">
+          <div class="ui-block-a" style="width: 30%; padding: 10px; background-color: lightcyan">
+            <h3>Players:</h3>
+            <ul data-role="listview" id="lobby-list" data-inset="true" class="ui-listview ui-listview-inset"></ul>
+          </div>
+          <div class="ui-block-b" style="width: 70%; padding: 10px; overflow-y: scroll" id="message-list">
+          </div>
+        </div>
+        <div class="ui-grid-solo" style="height: 120px;">
+          <form>
+            <fieldset data-role="ui-field-contain">
+              <label for="message">Text Message:</label>
+              <input type="text" name="message" id="message" value="">
+              <button type="button" class="ui-btn" id="send-message">Send</button>
+            </fieldset>
+          </form>
         </div>
       </div>
     </section>
