@@ -13,19 +13,35 @@ $(document).on('click', '#sign-in', function(){
   }
 });
 
-$('.no-enter').keydown(function(keyPressed){
+$(document).on('keydown', '.no-enter', function(keyPressed){
   // Suppresses "Enter" in name inputs.
   if(keyPressed.keyCode == 13) {
     return false;
   }
 });
 
-
+$(document).off('pageshow').on('pageshow', '#lobbypage', function(){
+  $('#start-game').hide();
+  $('#wait-for-host').hide();
+});
 
 $(document).on('click', '#send-message', function(){
+  deliverMessage();
+});
+
+$(document).on('keydown', '#message', function(keyPressed){
+  // Forces "Enter" to send message from message input.
+  if(keyPressed.keyCode == 13) {
+    deliverMessage();
+    return false;
+  }
+});
+
+var deliverMessage = function(){
   var messageText = $('#message').val();
   socket.emit('message', messageText);
-});
+  $('#message').val('');
+};
 
 socket.on('lobby-names', function(lobbyNicknames){
   var lobbyListText = '';

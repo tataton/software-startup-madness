@@ -24,7 +24,7 @@ var io = socket(server);
 
 var inGamePlayers = [];
 var lobbyPlayerNicknames = [];
-var lobbyLast9Messages = [];
+var lobbyLast5Messages = [];
 
 function Player(socketID, firstName, lastInitial){
   this.socketID = socketID;
@@ -74,18 +74,17 @@ io.sockets.on('connection', function(socket){
     }
     // Notify all other players to add new name to lobby list.
     io.sockets.emit('lobby-names', lobbyPlayerNicknames);
-    socket.emit('message', 'Welcome to the Software Startup lobby!');
     // Update new client on latest chat messages.
-    for (var j = 0; j < lobbyLast9Messages.length; j++) {
-      socket.emit('message', lobbyLast9Messages[j]);
+    for (var j = 0; j < lobbyLast5Messages.length; j++) {
+      socket.emit('message', lobbyLast5Messages[j]);
     }
     // Broadcast message that new player has joined.
-    var joinMessage = '<mark>' + currentTime() + ' <em>' + thisPlayer.nickname + ' joined the lobby.</em></mark>';
+    var joinMessage = '<mark>' + currentTime() + ' <em>' + thisPlayer.nickname + ' joined the chat.</em></mark>';
     broadcastMessage(joinMessage);
     // On disconnect, have to reverse a lot of these items.
     socket.on('disconnect', function(){
       // Broadcast message that player has left.
-      var leaveMessage = '<mark>' + currentTime() + ' <em>' + thisPlayer.nickname + ' left the lobby.</em></mark>';
+      var leaveMessage = '<mark>' + currentTime() + ' <em>' + thisPlayer.nickname + ' left the chat.</em></mark>';
       broadcastMessage(leaveMessage);
       // Find this player in arrays of Players, and remove.
       var playerIndex = inGamePlayers.indexOf(thisPlayer);
@@ -103,9 +102,9 @@ io.sockets.on('connection', function(socket){
 
 function broadcastMessage(message){
   io.sockets.emit('message', message);
-  lobbyLast9Messages.push(message);
-  if (lobbyLast9Messages.length === 10) {
-    lobbyLast9Messages.shift();
+  lobbyLast5Messages.push(message);
+  if (lobbyLast5Messages.length === 6) {
+    lobbyLast5Messages.shift();
   }
 }
 

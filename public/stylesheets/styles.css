@@ -12,6 +12,14 @@
   margin-bottom: 0.25em;
 }
 
+.ui-btn-inline {
+  vertical-align: top;
+}
+
+.button-names {
+  font-weight: normal;
+}
+
 mark {
   color: darkgray;
   background-color: inherit;
