@@ -186,8 +186,11 @@ function abandonHost(socketID, gameToAbandon){
     delete lobbyGames[gameToAbandon];
   } else {
     // The first ID in the playerIDs array should become the new host.
-    lobbyGames[gameToAbandon].hostID = lobbyGames[gameToAbandon].playerIDs[0];
+    var futureHostID = lobbyGames[gameToAbandon].playerIDs[0];
+    lobbyGames[gameToAbandon].hostID = futureHostID;
     lobbyGames[gameToAbandon].playerIDs.shift();
+    lobbyPlayers[futureHostID].hostOfGame = gameToAbandon;
+    lobbyPlayers[futureHostID].playerInGame = false;
   }
   lobbyPlayers[socketID].hostOfGame = false;
   broadcastGames(false);
@@ -240,7 +243,6 @@ function broadcastGames(thisSocketOnly){
     /* Only have to send to one client. This really only happens on
     initializing client, so I don't need to test whether client is in a
     game, they aren't. */
-    console.log(lobbyPlayers);
     unstartedGames.hostGameID = lobbyPlayers[thisSocketOnly].hostOfGame;
     unstartedGames.waitingToPlay = lobbyPlayers[thisSocketOnly].playerInGame;
     io.to(thisSocketOnly).emit('lobby-games', unstartedGames);
@@ -250,6 +252,7 @@ function broadcastGames(thisSocketOnly){
       if (!(lobbyPlayers[socketID].gameInProgress)) {
         unstartedGames.hostGameID = lobbyPlayers[socketID].hostOfGame;
         unstartedGames.waitingToPlay = lobbyPlayers[socketID].playerInGame;
+        console.log(socketID, " receives ", unstartedGames);
         io.to(socketID).emit('lobby-games', unstartedGames);
       }
     }

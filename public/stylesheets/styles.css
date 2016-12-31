@@ -16,8 +16,25 @@
   vertical-align: top;
 }
 
+.ui-btn-game {
+  text-align: left;
+}
+
 .button-names {
   font-weight: normal;
+}
+
+.button-host-name {
+  font-weight: normal;
+  color: red;
+}
+
+.button-im-the-host {
+  color: red;
+}
+
+.button-im-a-player {
+
 }
 
 mark {
